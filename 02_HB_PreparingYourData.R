@@ -39,16 +39,17 @@ strwrap(corpus1[[26]])[1:5] #the second number in brackets 1:5 refers to the fir
 
 #### Normalizing Your Data 1: Textual Normalization #####
 
-#strip white space
-corpus1 <- tm_map(corpus1, content_transformer(stripWhitespace)) 
 #make all lowercase
 corpus1 <- tm_map(corpus1, content_transformer(tolower))
 #remove numbers
 corpus1 <- tm_map(corpus1, content_transformer(removeNumbers))
 #remove punctuation
 #corpus1 <- tm_map(corpus1, content_transformer(removePunctuation))
-f<-content_transformer(function(x, pattern) gsub(pattern, "", x))
+f<-content_transformer(function(x, pattern) gsub(pattern, " ", x))
 corpus1 <- tm_map(corpus1, f, "[[:punct:]]")
+#strip white space
+corpus1 <- tm_map(corpus1, content_transformer(stripWhitespace)) 
+
 
 #Option: lemmatize your data (not often recommended)
 #corpus1.lemma <- tm_map(corpus1, lemmatize_strings)
@@ -67,7 +68,7 @@ corpus1.dtm<-DocumentTermMatrix(corpus1, control=list(wordLengths=c(1,Inf))) #(1
 #first create function that defines the n in ngrams. 2 = bigrams or 2 words in a row
 BigramTokenizer2 <- function(x)unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
 
-#you can also create a function that captures 1 and 2grams
+#you can also create a function that captures 1- and 2grams
 BigramTokenizer12 <- function(x)unlist(lapply(ngrams(words(x), 1:2), paste, collapse = " "), use.names = FALSE)
 
 #rerun the DTM function w the bigram function inside
