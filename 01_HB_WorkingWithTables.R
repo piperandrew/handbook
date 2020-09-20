@@ -15,7 +15,7 @@ setwd("~/Websites/git_piperandrew/handbook")
 
 #load table
 #you should see a data frame with 9 columns
-a<-read.csv("txtlab_Novel150_English.csv")
+a<-read.csv("txtlab_Novel150_English.csv", stringsAsFactors = T)
 
 #what are those columns?
 colnames(a)
