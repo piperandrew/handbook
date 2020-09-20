@@ -10,11 +10,11 @@
 #and output that measurement to a new table
 #i.e. you are creating new features beyond just using words
 
-#get list of files in your directory
-f.names<-list.files("txtlab_Novel150_English")
-
-#change your working directory to that folder
+#set your working directory to where your txt files are located
 setwd("~/Data/txtlab_Novel150_English")
+
+#get list of files in target directory
+f.names<-list.files()
 
 #we're going to create a function that reads in the texts, cleans them,
 #and stores them in a variable called "work"
@@ -23,8 +23,8 @@ text.prep<-function(x){
   work<-scan(x, what="character", quote="", quiet=T)
   #remove numbers
   work<-gsub("\\d", "", work)
-  #remove punctuation
-  work<-gsub("\\W", "", work)
+  #split on punctuation
+  work<-unlist(strsplit(work,"[[:punct:]]"))
   #make all lowercase
   work<-tolower(work)
   #remove blanks
